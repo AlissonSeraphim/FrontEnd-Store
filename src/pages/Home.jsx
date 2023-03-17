@@ -1,4 +1,6 @@
 import React from 'react';
+import { getCategories } from '../services/api';
+import Categories from '../components/Categories';
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
@@ -6,7 +8,12 @@ class Home extends React.Component {
     super();
     this.state = {
       search: '',
+      categories: [],
     };
+  }
+
+  componentDidMount() {
+    return this.fetchCategories();
   }
 
   onInputChange = ({ target }) => {
@@ -16,10 +23,18 @@ class Home extends React.Component {
     });
   };
 
+  fetchCategories = async () => {
+    const categories = await getCategories();
+    this.setState({
+      categories,
+    });
+  };
+
   render() {
-    const { search } = this.state;
+    const { search, categories } = this.state;
     return (
       <>
+        <Categories categories={ categories } />
         <Link
           data-testid="shopping-cart-button"
           to="/shopping-cart"
