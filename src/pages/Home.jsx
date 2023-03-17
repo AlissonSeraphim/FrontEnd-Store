@@ -1,6 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { getProductByInput } from '../services/api';
 import ProductsFound from '../components/ProductsFound';
+import { getCategories } from '../services/api';
+import Categories from '../components/Categories';
+
 
 class Home extends React.Component {
   constructor() {
@@ -8,7 +12,12 @@ class Home extends React.Component {
     this.state = {
       search: '',
       searchResult: [],
+      categories: [],
     };
+  }
+
+  componentDidMount() {
+    return this.fetchCategories();
   }
 
   onInputChange = ({ target }) => {
@@ -17,6 +26,7 @@ class Home extends React.Component {
       [name]: target.value,
     });
   };
+
 
   queryRequest = async () => {
     const { search } = this.state;
@@ -27,14 +37,30 @@ class Home extends React.Component {
     this.setState({ searchResult: results });
   };
 
+  fetchCategories = async () => {
+    const categories = await getCategories();
+    this.setState({
+      categories,
+    });
+
+
   render() {
     const {
       search,
+      categories,
       searchResult,
     } = this.state;
 
     return (
       <>
+        <Categories categories={ categories } />
+        <Link
+          data-testid="shopping-cart-button"
+          to="/shopping-cart"
+        >
+          carrinho de compras
+
+        </Link>
         <label>
           <input
             type="text"
