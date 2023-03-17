@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getProductByInput } from '../services/api';
+import { getProductByInput, getCategories } from '../services/api';
 import ProductsFound from '../components/ProductsFound';
-import { getCategories } from '../services/api';
 import Categories from '../components/Categories';
-
 
 class Home extends React.Component {
   constructor() {
@@ -27,7 +25,6 @@ class Home extends React.Component {
     });
   };
 
-
   queryRequest = async () => {
     const { search } = this.state;
 
@@ -42,7 +39,7 @@ class Home extends React.Component {
     this.setState({
       categories,
     });
-
+  };
 
   render() {
     const {
