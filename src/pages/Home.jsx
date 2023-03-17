@@ -1,6 +1,7 @@
 import React from 'react';
 import { getCategories } from '../services/api';
 import Categories from '../components/Categories';
+import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
   constructor() {
@@ -34,6 +35,13 @@ class Home extends React.Component {
     return (
       <>
         <Categories categories={ categories } />
+        <Link
+          data-testid="shopping-cart-button"
+          to="/shopping-cart"
+        >
+          carrinho de compras
+
+        </Link>
         <label>
           <input
             type="text"
