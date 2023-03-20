@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 class Categories extends React.Component {
   render() {
-    const { categories } = this.props;
-    console.log(categories);
+    const { categories, onClick } = this.props;
     return (
       categories.map((category) => (
         <input
@@ -12,6 +11,7 @@ class Categories extends React.Component {
           value={ category.name }
           key={ category.id }
           data-testid="category"
+          onClick={ () => onClick(category.id) }
         />
       ))
     );
@@ -23,6 +23,7 @@ Categories.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
   })).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Categories;

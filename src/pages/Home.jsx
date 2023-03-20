@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getProductByInput, getCategories } from '../services/api';
+import {
+  getProductByInput,
+  getCategories,
+  getProductByCategoryId,
+} from '../services/api';
 import ProductsFound from '../components/ProductsFound';
 import Categories from '../components/Categories';
 
@@ -41,6 +45,13 @@ class Home extends React.Component {
     });
   };
 
+  fetchProductsByCategories = async (categoryId) => {
+    const { results } = await getProductByCategoryId(categoryId);
+    this.setState({
+      searchResult: results,
+    });
+  };
+
   render() {
     const {
       search,
@@ -50,7 +61,10 @@ class Home extends React.Component {
 
     return (
       <>
-        <Categories categories={ categories } />
+        <Categories
+          categories={ categories }
+          onClick={ this.fetchProductsByCategories }
+        />
         <Link
           data-testid="shopping-cart-button"
           to="/shopping-cart"
