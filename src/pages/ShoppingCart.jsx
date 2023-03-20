@@ -18,6 +18,57 @@ class ShoppingCart extends React.Component {
     }
   }
 
+  removeProductInCart = (productId) => {
+    const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
+
+    const indexProduct = productsLocalStorage
+      .findIndex((product) => product.id === productId);
+
+    productsLocalStorage.splice(indexProduct, 1);
+
+    localStorage.setItem('cartProducts', JSON.stringify(productsLocalStorage));
+
+    this.setState({
+      cartProducts: productsLocalStorage,
+    });
+  };
+
+  incrementProductInCart = (productId) => {
+    const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
+
+    const indexProduct = productsLocalStorage
+      .findIndex((product) => product.id === productId);
+
+    const productInCart = productsLocalStorage[indexProduct];
+
+    productInCart.quantity += 1;
+
+    localStorage.setItem('cartProducts', JSON.stringify(productsLocalStorage));
+
+    this.setState({
+      cartProducts: productsLocalStorage,
+    });
+  };
+
+  decrementProductInCart = (productId) => {
+    const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
+
+    const indexProduct = productsLocalStorage
+      .findIndex((product) => product.id === productId);
+
+    const productInCart = productsLocalStorage[indexProduct];
+
+    if (productInCart.quantity === 1) return;
+
+    productInCart.quantity -= 1;
+
+    localStorage.setItem('cartProducts', JSON.stringify(productsLocalStorage));
+
+    this.setState({
+      cartProducts: productsLocalStorage,
+    });
+  };
+
   render() {
     const { cartProducts } = this.state;
     return (
@@ -32,6 +83,10 @@ class ShoppingCart extends React.Component {
               productPrice={ product.price }
               productQuantity={ product.quantity }
               productImg={ product.img }
+              productId={ product.id }
+              onClickRemoveProductButton={ this.removeProductInCart }
+              incrementProductInCart={ this.incrementProductInCart }
+              decrementProductInCart={ this.decrementProductInCart }
             />
           ))
 

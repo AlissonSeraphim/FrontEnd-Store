@@ -19,9 +19,6 @@ class ProductsFound extends React.Component {
           <img src={ productImg } alt={ productName } />
           <p>{productPrice}</p>
         </Link>
-        <h3>{productName}</h3>
-        <img src={ productImg } alt={ productName } />
-        <p>{productPrice}</p>
         <button
           data-testid="product-add-to-cart"
           onClick={ () => addProductCart(
