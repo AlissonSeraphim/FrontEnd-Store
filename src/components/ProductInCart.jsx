@@ -5,15 +5,15 @@ class ProductInCart extends React.Component {
   render() {
     const {
       productName,
-      // productImg,
+      productImg,
       productPrice,
       productQuantity,
     } = this.props;
 
     return (
       <div>
+        <img src={ productImg } alt={ productName } />
         <p data-testid="shopping-cart-product-name">{productName}</p>
-        {/* <img src={ productImg } alt={ productName } /> */}
         <p>{productPrice}</p>
         <p data-testid="shopping-cart-product-quantity">{productQuantity}</p>
       </div>
@@ -23,7 +23,7 @@ class ProductInCart extends React.Component {
 
 ProductInCart.propTypes = {
   productName: PropTypes.string.isRequired,
-  // productImg: PropTypes.string.isRequired,
+  productImg: PropTypes.string.isRequired,
   productPrice: PropTypes.number.isRequired,
   productQuantity: PropTypes.number.isRequired,
 };

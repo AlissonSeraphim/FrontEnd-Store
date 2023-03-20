@@ -56,7 +56,7 @@ class Home extends React.Component {
     });
   };
 
-  setProductToCart = (name, price, id) => {
+  setProductToCart = (name, price, id, img) => {
     const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
 
     const indexProduct = productsLocalStorage.findIndex((product) => product.id === id);
@@ -72,6 +72,7 @@ class Home extends React.Component {
         name,
         price,
         id,
+        img,
         quantity: 1,
       };
       productsLocalStorage.push(product);

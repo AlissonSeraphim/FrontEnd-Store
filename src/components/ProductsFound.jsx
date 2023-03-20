@@ -18,7 +18,12 @@ class ProductsFound extends React.Component {
         <p>{productPrice}</p>
         <button
           data-testid="product-add-to-cart"
-          onClick={ () => addProductCart(productName, productPrice, productId) }
+          onClick={ () => addProductCart(
+            productName,
+            productPrice,
+            productId,
+            productImg,
+          ) }
         >
           Adicionar ao Carrinho
 
