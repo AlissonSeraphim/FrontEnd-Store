@@ -104,6 +104,7 @@ class Home extends React.Component {
               productName={ item.title }
               productImg={ item.thumbnail }
               productPrice={ item.price }
+              productId={ item.id }
             />)) : (<h1>Nenhum produto foi encontrado</h1>)}
         </div>
       </>
