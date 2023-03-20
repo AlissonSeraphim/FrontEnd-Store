@@ -19,6 +19,10 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
+    if (!productsLocalStorage) {
+      localStorage.setItem('cartProducts', JSON.stringify([]));
+    }
     return this.fetchCategories();
   }
 
@@ -50,6 +54,31 @@ class Home extends React.Component {
     this.setState({
       searchResult: results,
     });
+  };
+
+  setProductToCart = (name, price, id, img) => {
+    const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
+
+    const indexProduct = productsLocalStorage.findIndex((product) => product.id === id);
+
+    const productCheckInCart = indexProduct >= 0;
+
+    if (productCheckInCart) {
+      const productInCart = productsLocalStorage[indexProduct];
+
+      productInCart.quantity += 1;
+    } else {
+      const product = {
+        name,
+        price,
+        id,
+        img,
+        quantity: 1,
+      };
+      productsLocalStorage.push(product);
+    }
+
+    localStorage.setItem('cartProducts', JSON.stringify(productsLocalStorage));
   };
 
   render() {
@@ -105,6 +134,7 @@ class Home extends React.Component {
               productImg={ item.thumbnail }
               productPrice={ item.price }
               productId={ item.id }
+              addProductCart={ this.setProductToCart }
             />)) : (<h1>Nenhum produto foi encontrado</h1>)}
         </div>
       </>
