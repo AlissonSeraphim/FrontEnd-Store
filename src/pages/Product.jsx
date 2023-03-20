@@ -30,6 +30,31 @@ class Product extends React.Component {
     history.push('/shopping-cart');
   };
 
+  setProductToCart = (name, price, id, img) => {
+    const productsLocalStorage = JSON.parse(localStorage.getItem('cartProducts'));
+
+    const indexProduct = productsLocalStorage.findIndex((product) => product.id === id);
+
+    const productCheckInCart = indexProduct >= 0;
+
+    if (productCheckInCart) {
+      const productInCart = productsLocalStorage[indexProduct];
+
+      productInCart.quantity += 1;
+    } else {
+      const product = {
+        name,
+        price,
+        id,
+        img,
+        quantity: 1,
+      };
+      productsLocalStorage.push(product);
+    }
+
+    localStorage.setItem('cartProducts', JSON.stringify(productsLocalStorage));
+  };
+
   render() {
     const { product } = this.state;
     const productIsLoad = Object.keys(product).length > 0;
@@ -49,11 +74,24 @@ class Product extends React.Component {
             {product.price}
           </h2>
           <button
+            data-testid="product-detail-add-to-cart"
+            onClick={ () => this.setProductToCart(
+              product.title,
+              product.price,
+              product.id,
+              product.thumbnail,
+            ) }
+          >
+            Adicionar ao Carrinho
+
+          </button>
+          <button
             onClick={ this.handleClickRedirectButton }
             data-testid="shopping-cart-button"
           >
             Ir para o carrinho
           </button>
+
         </>
       )
     );
