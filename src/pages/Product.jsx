@@ -60,39 +60,59 @@ class Product extends React.Component {
     const productIsLoad = Object.keys(product).length > 0;
     return (
       productIsLoad && (
-        <>
-          <h1 data-testid="product-detail-name">{product.title}</h1>
-          <img
-            src={ product.pictures[0].url }
-            alt={ product.title }
-            data-testid="product-detail-image"
-          />
-          <h2 data-testid="product-detail-price">
-            {' '}
-            R$
-            {' '}
-            {product.price}
-          </h2>
-          <button
-            data-testid="product-detail-add-to-cart"
-            onClick={ () => this.setProductToCart(
-              product.title,
-              product.price,
-              product.id,
-              product.thumbnail,
-            ) }
+        <div className="flex bg-gray-100 min-h-screen items-center justify-between">
+          <div
+            className="
+          min-h-[50%]
+          bg-white p-10
+          rounded-lg
+          justify-center
+          items-center
+          shadow-xl"
           >
-            Adicionar ao Carrinho
-
-          </button>
-          <button
-            onClick={ this.handleClickRedirectButton }
-            data-testid="shopping-cart-button"
+            <h1 data-testid="product-detail-name" className="text-xl">{product.title}</h1>
+            <img
+              src={ product.pictures[0].url }
+              alt={ product.title }
+              data-testid="product-detail-image"
+            />
+          </div>
+          <div
+            className="flex
+            min-w-[50%]
+          min-h-screen
+          bg-white p-10
+          rounded-lg
+          items-center
+          shadow-xl
+          "
           >
-            Ir para o carrinho
-          </button>
+            <h2 data-testid="product-detail-price">
+              {' '}
+              R$
+              {' '}
+              {product.price}
+            </h2>
+            <button
+              data-testid="product-detail-add-to-cart"
+              onClick={ () => this.setProductToCart(
+                product.title,
+                product.price,
+                product.id,
+                product.thumbnail,
+              ) }
+            >
+              Adicionar ao Carrinho
 
-        </>
+            </button>
+            <button
+              onClick={ this.handleClickRedirectButton }
+              data-testid="shopping-cart-button"
+            >
+              Ir para o carrinho
+            </button>
+          </div>
+        </div>
       )
     );
   }
