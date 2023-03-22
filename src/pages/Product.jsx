@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import { getProductById } from '../services/api';
+import ProductFormEvaluation from '../components/ProductFormEvaluation';
 
 class Product extends React.Component {
   constructor() {
@@ -8,11 +9,29 @@ class Product extends React.Component {
 
     this.state = {
       product: {},
+      rate: '',
+      inputEmail: '',
+      productReview: '',
+      formIsInvalid: false,
+      reviews: [],
     };
   }
 
   componentDidMount() {
     this.loadProduct();
+
+    const { match } = this.props;
+    const { id } = match.params;
+
+    const reviewsInLocalStorage = JSON.parse(localStorage.getItem(id));
+
+    if (!reviewsInLocalStorage) {
+      localStorage.setItem(id, JSON.stringify([]));
+    } else {
+      this.setState({
+        reviews: reviewsInLocalStorage,
+      });
+    }
   }
 
   loadProduct = async () => {
@@ -55,8 +74,82 @@ class Product extends React.Component {
     localStorage.setItem('cartProducts', JSON.stringify(productsLocalStorage));
   };
 
+  handleChangeGeneric = ({ target }) => {
+    const { value, name } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  validateForm = (callback) => {
+    const { inputEmail, rate } = this.state;
+
+    const emailRegEx = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+
+    const inputEmailIsValid = emailRegEx.test(inputEmail);
+    const rateIsValid = rate.length > 0;
+
+    const validations = [inputEmailIsValid, rateIsValid];
+
+    const formIsValid = validations.every((validation) => validation);
+
+    this.setState({
+      formIsInvalid: !formIsValid,
+    }, callback);
+  };
+
+  handleSubmit = () => {
+    this.validateForm(() => {
+      const { formIsInvalid } = this.state;
+
+      if (!formIsInvalid) {
+        this.addReview();
+      }
+    });
+  };
+
+  addReview = () => {
+    const {
+      inputEmail,
+      productReview,
+      rate,
+    } = this.state;
+    const { match } = this.props;
+    const { id } = match.params;
+
+    const reviewsInLocalStorage = JSON.parse(localStorage.getItem(id));
+
+    const lastElement = reviewsInLocalStorage[reviewsInLocalStorage.length - 1];
+
+    const reviewItem = {
+      id: `${id}-${lastElement ? lastElement.id + 1 : 1}`,
+      email: inputEmail,
+      productReview,
+      rating: rate,
+    };
+
+    reviewsInLocalStorage.push(reviewItem);
+
+    localStorage.setItem(id, JSON.stringify(reviewsInLocalStorage));
+
+    this.setState({
+      reviews: reviewsInLocalStorage,
+      inputEmail: '',
+      rate: '',
+      productReview: '',
+    });
+  };
+
   render() {
-    const { product } = this.state;
+    const {
+      product,
+      rate,
+      inputEmail,
+      productReview,
+      formIsInvalid,
+      reviews,
+    } = this.state;
     const productIsLoad = Object.keys(product).length > 0;
     return (
       productIsLoad && (
@@ -112,6 +205,15 @@ class Product extends React.Component {
               Ir para o carrinho
             </button>
           </div>
+          <ProductFormEvaluation
+            inputEmail={ inputEmail }
+            handleChangeGeneric={ this.handleChangeGeneric }
+            rate={ rate }
+            productReview={ productReview }
+            formIsInvalid={ formIsInvalid }
+            handleSubmit={ this.handleSubmit }
+            reviews={ reviews }
+          />
         </div>
       )
     );
