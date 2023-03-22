@@ -71,9 +71,26 @@ class ShoppingCart extends React.Component {
 
   render() {
     const { cartProducts } = this.state;
+    const imageUrl = 'https://static.thenounproject.com/png/538404-200.png';
     return (
       cartProducts.length === 0 ? (
-        <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+        <div className="flex items-center justify-center min-h-screen">
+          <div
+            className="flex-col max-w-sm rounded overflow-hidden shadow-lg text-center"
+          >
+            <img
+              className="w-20 mx-auto"
+              src={ imageUrl }
+              alt="Empty Cart"
+            />
+            <h1
+              className="font-bold text-3xl mb-2 px-6 py-4"
+              data-testid="shopping-cart-empty-message"
+            >
+              Seu carrinho está vazio
+            </h1>
+          </div>
+        </div>
       )
         : (
           cartProducts.map((product) => (

@@ -15,29 +15,49 @@ class ProductInCart extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <button
-          onClick={ () => onClickRemoveProductButton(productId) }
-          data-testid="remove-product"
-        >
-          X
-        </button>
-        <img src={ productImg } alt={ productName } />
-        <p data-testid="shopping-cart-product-name">{productName}</p>
-        <p>{productPrice}</p>
-        <button
-          onClick={ () => decrementProductInCart(productId) }
-          data-testid="product-decrease-quantity"
-        >
-          -
-        </button>
-        <p data-testid="shopping-cart-product-quantity">{productQuantity}</p>
-        <button
-          onClick={ () => incrementProductInCart(productId) }
-          data-testid="product-increase-quantity"
-        >
-          +
-        </button>
+      <div className="flex items-center justify-between rounded-lg shadow-lg m-5 p-1">
+        <div className="flex items-center">
+          <img className="p-5" src={ productImg } alt={ productName } />
+          <p
+            className=""
+            data-testid="shopping-cart-product-name"
+          >
+            {productName}
+          </p>
+        </div>
+        <div className="flex">
+          <button
+            className="px-5"
+            onClick={ () => decrementProductInCart(productId) }
+            data-testid="product-decrease-quantity"
+          >
+            -
+          </button>
+          <p
+            className="px-5"
+            data-testid="shopping-cart-product-quantity"
+          >
+            {productQuantity}
+          </p>
+          <button
+            className="px-5"
+            onClick={ () => incrementProductInCart(productId) }
+            data-testid="product-increase-quantity"
+          >
+            +
+          </button>
+          <p className="px-5">
+            R$
+            {productPrice}
+          </p>
+          <button
+            className="px-5"
+            onClick={ () => onClickRemoveProductButton(productId) }
+            data-testid="remove-product"
+          >
+            X
+          </button>
+        </div>
       </div>
     );
   }
