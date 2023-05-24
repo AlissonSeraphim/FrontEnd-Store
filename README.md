@@ -21,6 +21,10 @@ Este é um projeto de uma loja online desenvolvida utilizando a API do Mercado L
 - Ciclo de vida do React para controlar o comportamento dos componentes
 - Tailwind CSS para a estilização
 
+## Trabalho em andamento
+
+Por favor, tenha em mente que o trabalho de estilização ainda está em progresso. A interface da aplicação pode sofrer alterações e melhorias à medida que continuamos trabalhando no design. 
+
 ## Contribuidores
 
 - Alisson Tassi - GitHub: [Alisson Seraphim](https://github.com/AlissonSeraphim)
@@ -62,6 +66,10 @@ This is a project for an online store developed using the Mercado Livre API. The
 - React Router (Browser Router) for managing application routes
 - React lifecycle methods to control component behavior
 - Tailwind CSS for styling
+
+## Work in Progress
+
+Please note that the styling is still a work in progress. The application's interface may undergo changes and improvements as we continue to work on the design.
 
 ## Contributors
 
